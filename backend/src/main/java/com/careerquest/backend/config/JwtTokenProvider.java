@@ -18,9 +18,28 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider(
             @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long expirationTime) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+            @Value("${jwt.expiration}") long expirationTime,
+            @Value("${jwt.key-file:./data/jwt.key}") String keyFile) {
+        this.key = Keys.hmacShaKeyFor(loadSecret(secret, keyFile).getBytes(StandardCharsets.UTF_8));
         this.expirationTime = expirationTime;
+    }
+
+    private static String loadSecret(String configured, String keyFile) {
+        if (configured != null && !configured.isBlank()) return configured;
+        try {
+            java.nio.file.Path path = java.nio.file.Path.of(keyFile).toAbsolutePath();
+            java.nio.file.Files.createDirectories(path.getParent());
+            if (!java.nio.file.Files.exists(path)) {
+                byte[] bytes = new byte[48];
+                new java.security.SecureRandom().nextBytes(bytes);
+                try {
+                    java.nio.file.Files.writeString(path, java.util.Base64.getEncoder().encodeToString(bytes), java.nio.file.StandardOpenOption.CREATE_NEW);
+                } catch (java.nio.file.FileAlreadyExistsException ignored) { /* Another local instance created it. */ }
+            }
+            return java.nio.file.Files.readString(path).trim();
+        } catch (java.io.IOException error) {
+            throw new IllegalStateException("Set JWT_SECRET or provide a writable local JWT_KEY_FILE", error);
+        }
     }
 
     public String generateToken(String username, String role) {

@@ -1,123 +1,149 @@
-import React, { useState } from 'react';
-import { MessageSquare, Send, X } from 'lucide-react';
-import api from '../utils/api';
-
+import React, { useEffect, useRef, useState } from "react";
+import { Send, X } from "lucide-react";
+import api from "../utils/api";
+import { QuestyMascot } from "./QuestyMascot";
 export function AIChatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'ai', text: "Hi! I'm Questy 🤖! You can ask me about games, story building, logic puzzles, or ask: 'What adventure should I try next?'" }
+    {
+      sender: "ai",
+      text: "Hi, I’m Questy! Ask me about coding, nature, stories or your next adventure.",
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const sendMessage = async (e) => {
-    e.preventDefault();
+  const end = useRef(null);
+  const launcher = useRef(null);
+  useEffect(() => {
+    end.current?.scrollIntoView({ block: "nearest" });
+  }, [messages, loading]);
+  const close = () => {
+    setOpen(false);
+    launcher.current?.focus();
+  };
+  const send = async (event) => {
+    event.preventDefault();
     if (!input.trim() || loading) return;
-
-    const userMsg = { sender: 'user', text: input };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
+    const text = input.trim();
+    setInput("");
+    setMessages((previous) => [...previous, { sender: "user", text }]);
     setLoading(true);
-
     try {
-      const res = await api.post('/ai/chat', { message: userMsg.text });
-      setMessages(prev => [...prev, { sender: 'ai', text: res.data.response }]);
-    } catch (e) {
-      // Friendly fallback responses if chat backend isn't connected
-      const lower = userMsg.text.toLowerCase();
-      let reply = "Nice work! You're doing awesome exploring new games and activities!";
-      if (lower.includes('next') || lower.includes('try') || lower.includes('game')) {
-        reply = "Want to try another adventure? Spell Quest, Story Builder, and Code the Robot are super fun!";
-      } else if (lower.includes('story') || lower.includes('word') || lower.includes('spell')) {
-        reply = "You really enjoy solving word puzzles and creating stories!";
-      } else if (lower.includes('tech') || lower.includes('code') || lower.includes('logic')) {
-        reply = "You seem to enjoy solving logical and technology-based challenges!";
-      }
-      setMessages(prev => [...prev, { sender: 'ai', text: reply }]);
+      const response = await api.post("/ai/chat", { message: text });
+      setMessages((previous) => [
+        ...previous,
+        { sender: "ai", text: response.data.response },
+      ]);
+    } catch {
+      setMessages((previous) => [
+        ...previous,
+        {
+          sender: "ai",
+          text: "I couldn’t reach the adventure server. Please try again when you’re connected. You can still browse the game collection.",
+        },
+      ]);
     } finally {
       setLoading(false);
     }
   };
-
-  const selectSuggestion = (text) => {
-    setInput(text);
-  };
-
   return (
-    <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000 }}>
-      {isOpen ? (
-        <div className="card animate-fade-in" style={{ width: '320px', height: '420px', display: 'flex', flexDirection: 'column', padding: '0', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
-          {/* Header */}
-          <div style={{ background: 'var(--color-primary)', color: 'white', padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>🤖 Ask Questy</span>
-            <button onClick={() => setIsOpen(false)} style={{ border: 'none', background: 'none', color: 'white', cursor: 'pointer' }}>
-              <X size={18} />
+    <aside className={`chat-widget ${open ? "chat-widget--open" : ""}`} aria-label="Questy adventure guide">
+      {open ? (
+        <section
+          className="chat-panel"
+          aria-label="Chat with Questy"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") close();
+          }}
+        >
+          <header className="chat-header">
+            <span>
+              <QuestyMascot
+                className="chat-questy"
+                expression={loading ? "thinking" : "happy"}
+              />{" "}
+              Ask Questy
+            </span>
+            <button
+              className="icon-button"
+              aria-label="Close Questy chat"
+              onClick={close}
+            >
+              <X size={19} />
             </button>
-          </div>
-
-          {/* Messages */}
-          <div style={{ flex: 1, padding: '12px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {messages.map((m, idx) => (
-              <div 
-                key={idx} 
-                style={{
-                  alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
-                  background: m.sender === 'user' ? 'var(--color-primary)' : 'var(--bg-app)',
-                  color: m.sender === 'user' ? 'white' : 'var(--text-primary)',
-                  padding: '8px 12px',
-                  borderRadius: '12px',
-                  maxWidth: '85%',
-                  fontSize: '13px',
-                  whiteSpace: 'pre-wrap'
-                }}
+          </header>
+          <div
+            className="chat-messages"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+          >
+            {messages.map((message, index) => (
+              <p
+                className={`chat-message chat-message--${message.sender}`}
+                key={index}
               >
-                {m.text}
-              </div>
+                <span className="sr-only">
+                  {message.sender === "user" ? "You: " : "Questy: "}
+                </span>
+                {message.text}
+              </p>
             ))}
             {loading && (
-              <div style={{ alignSelf: 'flex-start', background: 'var(--bg-app)', padding: '8px 12px', borderRadius: '12px', fontSize: '13px', fontStyle: 'italic' }}>
-                Questy is typing...
-              </div>
+              <p className="fine-print" role="status">
+                Questy is thinking…
+              </p>
             )}
+            <span ref={end} />
           </div>
-
-          {/* Suggestions */}
-          <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', padding: '6px 12px', borderTop: '1px solid var(--color-border)' }}>
-            {["What game should I play?", "Tell me a word hint!", "What am I good at?"].map((s, i) => (
-              <button 
-                key={i} 
-                onClick={() => selectSuggestion(s)}
-                style={{ background: 'var(--bg-app)', border: '1px solid var(--color-border)', borderRadius: '12px', padding: '4px 8px', fontSize: '11px', whiteSpace: 'nowrap', cursor: 'pointer' }}
-              >
-                {s}
+          <div className="chat-suggestions">
+            {[
+              "Tell me about coding",
+              "What about nature?",
+              "Suggest an adventure",
+            ].map((text) => (
+              <button key={text} onClick={() => setInput(text)}>
+                {text}
               </button>
             ))}
           </div>
-
-          {/* Input form */}
-          <form onSubmit={sendMessage} style={{ display: 'flex', padding: '8px', borderTop: '1px solid var(--color-border)', background: 'var(--bg-surface)' }}>
-            <input 
-              type="text" 
-              className="form-input" 
-              value={input} 
-              onChange={(e) => setInput(e.target.value)} 
-              placeholder="Ask Questy..."
-              style={{ flex: 1, minHeight: '38px', padding: '8px', borderRadius: '18px' }}
+          <form className="chat-form" onSubmit={send}>
+            <label htmlFor="questy-message" className="sr-only">
+              Message to Questy
+            </label>
+            <input
+              id="questy-message"
+              className="form-input"
+              placeholder="What are you curious about?"
+              autoFocus
+              value={input}
+              maxLength={1000}
+              onChange={(event) => setInput(event.target.value)}
             />
-            <button className="btn btn-primary" type="submit" style={{ minWidth: '40px', minHeight: '38px', padding: '0', borderRadius: '50%', marginLeft: '6px' }}>
-              <Send size={16} />
+            <button
+              className="btn btn-primary"
+              aria-label="Send message"
+              disabled={loading || !input.trim()}
+            >
+              <Send size={18} />
             </button>
           </form>
-        </div>
+          <p className="chat-disclaimer">
+            A rule-based guide. Suggestions are not an assessment.
+          </p>
+        </section>
       ) : (
-        <button 
-          className="btn btn-primary" 
-          onClick={() => setIsOpen(true)}
-          style={{ width: '56px', height: '56px', borderRadius: '50%', padding: '0', boxShadow: 'var(--shadow-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        <button
+          ref={launcher}
+          className="chat-launcher"
+          onClick={() => setOpen(true)}
+          aria-expanded={false}
+          aria-label="Ask Questy"
         >
-          🤖
+          <QuestyMascot className="chat-questy" />
+          Ask Questy
         </button>
       )}
-    </div>
+    </aside>
   );
 }

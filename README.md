@@ -1,77 +1,64 @@
-# CareerQuest AI 🚀
-### Interactive Children's Interest Discovery & Skill Analysis Platform
+# FutureQuest AI
 
-**CareerQuest AI** is an AI-powered interactive game platform designed for children to explore their strengths and natural interests through 20 specialized mini-games across 7 core skill domains. Parents can view detailed behavioral insights, interest tracking, and progress metrics without restricting their child's independent play.
+A React and Spring Boot project where children explore career-inspired activities and parents review recorded interests and developing skills. Suggestions are invitations to explore, not permanent career assignments or standardized assessments.
 
----
+## Current application
 
-## ✨ Key System Features
+- 24 activities across nine browsing worlds, covering technology, engineering, science, creativity, communication, helping, business and nature.
+- Independent child registration using nickname, avatar, age band and PIN; separate parent accounts with verified Player Code/PIN linking.
+- Easy, Moderate, Medium and Hard are freely selectable. Difficulty changes are implemented per engine; the reports document remaining content-quality limits.
+- Executable robot routes, generated age-aware puzzles, spelling and speaking, story/design choices, environmental missions, city planning, classroom business/science models and audible rhythm creation.
+- Persistent game history, XP, timeline, idempotent completion retries, structured experiment/choice evidence, and linked-parent dashboards.
+- Separate interest and scored-task summaries. Preference games attribute domains to selected activities. Open-ended creativity normally has no correctness score.
+- Original SVG worlds and Questy illustrations, responsive interfaces, keyboard-friendly controls and optional speech input with typed fallback.
 
-### 1. Child-Centric & Parent-Independent Play
-- **Zero Permission Gates**: Children register with a simple player nickname and avatar, generating a unique Player Code (`CQ-XXXXX`).
-- **Instant Game Access**: No parent OTP, consent screens, or approval blockers in the child's flow.
+The runtime analysis is transparent Java rules and keyword chat. Python CLI rules and a synthetic training prototype are separate experiments; no scientifically validated or integrated ML prediction is claimed. Some creative games remain choice-based and need richer artifacts; see the QA reports.
 
-### 2. 100% Free Difficulty Selection (No Level Locking)
-- **Always Playable**: 🟢 **Easy**, 🟡 **Moderate**, 🟠 **Medium**, 🔴 **Hard** levels are 100% unlocked for all 20 mini-games from day one.
-- **Voluntary Choice Analysis**: System tracks voluntary difficulty selection (`preferredDifficulty`, `highestDifficultyTried`) to distinguish **Interest** from **Skill**.
+## Run locally
 
-### 3. 7 Core Skill & Interest Domains
-1. 🗣️ **Communication & Language** (*Spell Quest, Listen & Spell, Speak & Shine, Read Aloud, Describe the Picture, Story Builder, Sentence Builder, Rapid Word Challenge, News Reporter*)
-2. 💻 **Technology & Logic** (*Code the Robot, Puzzle Laboratory, Math Treasure Hunt, Cyber Detective*)
-3. 🔬 **Science & Exploration** (*Space Scientist, Archaeologist*)
-4. 🎨 **Creativity & Design** (*Dream Designer, Story Builder*)
-5. 🌱 **Nature & Environment** (*Wildlife Photographer, Eco Rescue*)
-6. 🤝 **Social & Helping** (*Emergency Doctor*)
-7. 💼 **Business & Leadership** (*Mini Entrepreneur, News Reporter*)
+Requirements: Java 17+, Maven 3.8+, and Node 20.19+ or 22.12+ (tested with Node 24).
 
-### 4. Specialized Mini-Game Interaction Engines
-- 🤖 **Code the Robot**: Visual 4x4 grid canvas with Robot 🤖, obstacles ⬛, star target ⭐, and interactive command builder (`➡️ Right`, `⬇️ Down`, `🔄 Reset`) with step-by-step movement animation.
-- 🔤 **Spell Quest**: Letter typing input with `_ _ _ _ _` letter feedback and 🔊 pronunciation.
-- 🎧 **Listen & Spell**: Audio headphone hub, 🔊 **Play Word** button (Web Speech API TTS), hidden target word until answered, 💡 Hint toggle.
-- 🎙️ **Speak & Shine & Read Aloud**: 🎤 Microphone trigger, Web Speech API speech-to-text recognition, transcript preview, positive AI reinforcement.
-- 📚 **Story Builder**: Prominent visual image sequence builder (`🐶 → 🌧️ → 🏠 → 😊`), 🎤 **Tell My Story** or ⌨️ **Write My Story** modes.
-- 📰 **News Reporter**: Fictional Event News Card (`📰 SCHOOL NEWS: 🌳 100 Trees Planted by 50 Students on Friday`), 🎤 **You're the Reporter!** spoken broadcast.
-- ⚡ **Rapid Word Challenge**: 30-second rapid word recall (e.g. 🐾 *Animals*), live word chip stream (`Dog ✓`, `Tiger ✓`), 🎤 Speak or ⌨️ Type.
-- 🧩 **Puzzle Laboratory**: Shape series (`▲ ● ▲ ● ▲ ?`), number series, odd-one-out (`🐶 🐱 🐯 🚗`), visual matching.
-- 🗺️ **Math Treasure Hunt**: Treasure map riddles (`"24 coins into 6 chests. Coins per chest?"`), coin calculations, chest unlocking ✨.
-- 🎨 **Dream Designer**: Choice-based room/poster builder (Cosmic, Nature, Pastel themes, furniture). NO correct/incorrect answers! Records creative preferences.
-- 🌱 **Eco Rescue**: Waste sorting into `♻️ Recycling`, `🌱 Compost`, `🗑️ Trash`.
-- 🍋 **Mini Entrepreneur**: Lemonade stand simulation (₹500 budget, pricing slider ₹10–₹50, sales outcome calculation: 20 customers, ₹700 revenue, ₹200 profit).
-
----
-
-## 🛠️ Technology Stack
-
-- **Frontend**: React, Vite, Vanilla CSS design tokens, Lucide React icons, Web Speech API (TTS & STT).
-- **Backend**: Java 17, Spring Boot 3, Spring Security, JWT Authentication, JPA / Hibernate, H2 Database / PostgreSQL.
-- **AI Analytics**: Python / Spring AI behavioral telemetry processor.
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-- Node.js (v18+)
-- Java JDK 17+
-- Maven 3.8+
-
-### 2. Backend Setup
-```bash
+```powershell
 cd backend
-mvn clean install
+mvn test
 mvn spring-boot:run
 ```
-Backend runs on `http://localhost:8080`
 
-### 3. Frontend Setup
-```bash
+In a second terminal:
+
+```powershell
 cd frontend
 npm install
-npm run dev
+npm run dev -- --host 127.0.0.1
 ```
-Frontend runs on `http://localhost:5173`
 
----
+Frontend: http://127.0.0.1:5173 . Backend: http://127.0.0.1:8080/api . No separate Python server or database process is required.
 
-## 📈 Repository Link
-GitHub: [https://github.com/basigirisaisindhu011/careerquest-backend](https://github.com/basigirisaisindhu011/careerquest-backend)
+When started from `backend`, default development storage is file-backed H2 under `backend/data/`. Set `DB_URL` for another database and `DB_PASSWORD` for a password-protected database. Older local databases created with a password require the corresponding environment value. JUnit uses isolated in-memory H2. QA runners create disposable accounts and must never target production data.
+
+No runtime signing key is committed. Set `JWT_SECRET` for a managed key; otherwise local development creates an ignored `backend/data/jwt.key` that persists across restarts. `JWT_KEY_FILE` overrides its location. Keep the local key/database outside Git. The H2 web console is disabled by default; enable `ENABLE_H2_CONSOLE` only for local debugging. Deployment requires separately reviewed origins, secrets, storage volumes, backups and privacy controls.
+
+## Verification
+
+Start both services for browser/API tests. From the project root:
+
+```powershell
+mvn -f backend/pom.xml test
+npm --prefix frontend run lint
+npm --prefix frontend run build
+node --test frontend/tests/challenges.test.mjs
+npm --prefix frontend test
+node frontend/tests/full-game-qa.mjs
+node frontend/tests/game-quality-probes.mjs
+node frontend/tests/evidence-qa.mjs
+node frontend/tests/edge-case-qa.mjs
+python tools/test_analyzer.py
+```
+
+The full-game runner discovers visible catalog cards, plays all difficulties and two additional Easy replays, and verifies each completion through linked-parent readback. Test credentials are generated at runtime. Raw captures/databases/logs remain local under ignored QA artifact directories; reviewed Markdown reports and the sanitized results summary are versioned. Build output, dependencies and environment files are not source deliverables.
+
+Reports: [latest verified improvements](qa-reports/VERIFIED_IMPROVEMENTS.md), [previous detailed findings](qa-reports/CONTINUED_TEST_REPORT.md), and [initial project audit](docs/audit/STAGE1_RECOVERY_AUDIT.md). Historical failures are retained and distinguished from actual retests.
+
+## Repository
+
+[basigirisaisindhu011/FutureQuest-AI](https://github.com/basigirisaisindhu011/FutureQuest-AI)

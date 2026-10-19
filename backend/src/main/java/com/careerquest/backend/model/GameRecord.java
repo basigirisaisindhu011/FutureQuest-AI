@@ -4,12 +4,27 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "game_records")
+@Table(name = "game_records", uniqueConstraints = @UniqueConstraint(columnNames = {"child_profile_id", "session_id"}))
 public class GameRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "session_id", length = 100)
+    private String sessionId;
+
+    @Convert(converter = ActivityEvidenceConverter.class)
+    @Column(name = "activity_evidence", columnDefinition = "TEXT")
+    private java.util.Map<String, Object> evidence = new java.util.LinkedHashMap<>();
+
+    public java.util.Map<String, Object> getEvidence() { return evidence; }
+    public void setEvidence(java.util.Map<String, Object> evidence) { this.evidence = evidence; }
+    public Object getPredictions() { return evidence.get("predictions"); }
+    public Object getObservations() { return evidence.get("observations"); }
+
+    public String getSessionId() { return sessionId; }
+    public void setSessionId(String sessionId) { this.sessionId = sessionId; }
 
     @Column(name = "child_profile_id", nullable = false)
     private Long childProfileId;
@@ -23,8 +38,8 @@ public class GameRecord {
     @Column(name = "game_category")
     private String gameCategory; // e.g. "Communication & Language", "Technology & Logic", etc.
 
-    @Column(nullable = false)
-    private int score = 0;
+    @Column
+    private Integer score;
 
     @Column(name = "points_earned", nullable = false)
     private int pointsEarned = 0;
@@ -42,7 +57,7 @@ public class GameRecord {
     private String careerDomains = "";
 
     @Column(name = "accuracy")
-    private double accuracy = 100.0;
+    private Double accuracy;
 
     @Column(name = "attempts")
     private int attempts = 1;
@@ -139,11 +154,11 @@ public class GameRecord {
         this.gameCategory = gameCategory;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
@@ -187,11 +202,11 @@ public class GameRecord {
         this.careerDomains = careerDomains;
     }
 
-    public double getAccuracy() {
+    public Double getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(double accuracy) {
+    public void setAccuracy(Double accuracy) {
         this.accuracy = accuracy;
     }
 

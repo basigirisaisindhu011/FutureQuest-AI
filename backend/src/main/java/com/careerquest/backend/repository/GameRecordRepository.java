@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GameRecordRepository extends JpaRepository<GameRecord, Long> {
     List<GameRecord> findByChildProfileId(Long childProfileId);
+    java.util.Optional<GameRecord> findByChildProfileIdAndSessionId(Long childProfileId, String sessionId);
 }

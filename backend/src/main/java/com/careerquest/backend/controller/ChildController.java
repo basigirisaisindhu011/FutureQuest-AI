@@ -1,6 +1,8 @@
 package com.careerquest.backend.controller;
 
 import com.careerquest.backend.dto.GameRecordRequest;
+import com.careerquest.backend.dto.QuizRecordRequest;
+import org.springframework.transaction.annotation.Transactional;
 import com.careerquest.backend.model.*;
 import com.careerquest.backend.repository.*;
 import com.careerquest.backend.service.NotificationService;
@@ -138,23 +140,11 @@ public class ChildController {
 
         List<Question> questions = questionRepository.findByGameIdAndDifficultyAndAgeGroupAndActiveTrue(cleanGameId, cleanLevel, ageGroup);
         if (questions.isEmpty()) {
-            questions = questionRepository.findByGameIdAndDifficultyAndActiveTrue(cleanGameId, cleanLevel);
-        }
-        if (questions.isEmpty()) {
-            questions = questionRepository.findByGameIdAndActiveTrue(cleanGameId);
-        }
-
-        if (questions.isEmpty()) {
-            Question fallback = new Question(
-                cleanGameId, ageGroup, cleanLevel, "MULTIPLE_CHOICE",
-                "Mission Challenge (" + cleanLevel + "): Choose the correct action to complete this mission.",
-                "Option A (Correct),Option B,Option C",
-                "Option A (Correct)",
-                "Think carefully.",
-                "Basic problem solving step.",
-                "Logic"
-            );
-            questions = List.of(fallback);
+            return ResponseEntity.status(404).body(Map.of(
+                    "message", "No verified challenges are available for this age group, game, and difficulty.",
+                    "gameId", cleanGameId,
+                    "ageGroup", ageGroup,
+                    "difficulty", cleanLevel));
         }
 
         List<Question> shuffled = new ArrayList<>(questions);
@@ -165,16 +155,54 @@ public class ChildController {
         return ResponseEntity.ok(sliced);
     }
 
-    @PostMapping("/games/level-complete")
-    public ResponseEntity<?> submitLevelComplete(@RequestBody Map<String, Object> payload) {
+    @PostMapping("/quizzes")
+    public ResponseEntity<?> submitQuiz(@Valid @RequestBody QuizRecordRequest request) {
         User user = getAuthenticatedUser();
         ChildProfile profile = childProfileRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Profile not found"));
+        QuizRecord record = quizRecordRepository.save(new QuizRecord(
+                profile.getId(), request.getQuizType(), request.getScore(), request.getResponses()));
+        return ResponseEntity.status(201).body(record);
+    }
+
+    @GetMapping("/quizzes")
+    public ResponseEntity<?> getQuizzes() {
+        User user = getAuthenticatedUser();
+        ChildProfile profile = childProfileRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Profile not found"));
+        return ResponseEntity.ok(quizRecordRepository.findByChildProfileId(profile.getId()));
+    }
+
+    @Transactional
+    @PostMapping("/games/level-complete")
+    public ResponseEntity<?> submitLevelComplete(@RequestBody Map<String, Object> payload) {
+        validateCompletion(payload);
+        User user = getAuthenticatedUser();
+        ChildProfile profile = childProfileRepository.findLockedByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
 
+        String sessionId = (String) payload.get("sessionId");
+        if (sessionId != null) {
+            Optional<GameRecord> saved = gameRecordRepository.findByChildProfileIdAndSessionId(profile.getId(), sessionId);
+            if (saved.isPresent()) {
+                GameRecord previous = saved.get();
+                if (!previous.getGameType().equals(normalizeGameId((String) payload.get("gameId")))
+                        || !previous.getDifficulty().equalsIgnoreCase((String) payload.getOrDefault("level", "EASY"))) {
+                    throw new IllegalArgumentException("Session already belongs to another game or difficulty");
+                }
+                int stars = previous.getPointsEarned() / 40;
+                return ResponseEntity.ok(Map.of("gameId", previous.getGameType(), "level", previous.getDifficulty(),
+                        "completed", true, "recordId", previous.getId(), "xpEarned", previous.getPointsEarned(),
+                        "starsEarned", stars, "totalPoints", profile.getPoints()));
+            }
+        }
+
         String gameId = normalizeGameId((String) payload.get("gameId"));
-        String level = ((String) payload.getOrDefault("level", "EASY")).toUpperCase();
-        int score = ((Number) payload.getOrDefault("score", 100)).intValue();
-        int starsEarned = score >= 90 ? 3 : (score >= 60 ? 2 : 1);
+        String level = ((String) payload.getOrDefault("level", "EASY")).toUpperCase(Locale.ROOT);
+        Integer score = payload.get("score") instanceof Number ? ((Number) payload.get("score")).intValue() : null;
+        Double accuracy = payload.get("accuracy") instanceof Number ? ((Number) payload.get("accuracy")).doubleValue() : null;
+        if (score == null && accuracy != null) score = (int) Math.round(accuracy);
+        int starsEarned = score == null ? 1 : (score >= 90 ? 3 : (score >= 60 ? 2 : 1));
         int xpEarned = starsEarned * 40;
 
         GameLevelProgress progress = gameLevelProgressRepository
@@ -190,15 +218,44 @@ public class ChildController {
         gameLevelProgressRepository.save(progress);
 
         GameRecord record = new GameRecord();
+        record.setSessionId(sessionId);
         record.setChildProfileId(profile.getId());
         record.setGameType(gameId);
         record.setGameName((String) payload.getOrDefault("gameName", gameId));
         record.setGameCategory((String) payload.getOrDefault("gameCategory", "Communication & Language"));
+        record.setCareerDomains(payloadValue(payload.get("careerDomains")));
+        if (Set.of("interest_battle", "curiosity_trail").contains(gameId))
+            record.setCareerDomains(selectedDiscoveryDomains(payload.get("choicesMade")));
+        Map<String, Object> evidence = new LinkedHashMap<>();
+        evidence.put("schemaVersion", 1);
+        for (String field : List.of("predictions", "observations", "experiment", "experimentRetries", "reasoning",
+                "pairwisePreferences", "curiosityPath", "enjoyedChallenge", "invention", "iteration", "featureChoices",
+                "planningChoices", "layout", "spatialChoices", "allocation", "adaptationChoices", "compositionChoices",
+                "styleChoices", "narrativeChoices", "ingredientChoices", "createdPattern", "instrument", "creativePreferences",
+                "transcriptAnalysis", "commandsUsed", "retries", "constraintsMet", "resourcesUsed", "resourceLimit",
+                "revenue", "profit", "customers", "price", "cost", "simulation")) {
+            if (payload.containsKey(field)) evidence.put(field, payload.get(field));
+        }
+        try {
+            if (new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(evidence).length() > 32768)
+                throw new IllegalArgumentException("Activity evidence exceeds the supported size");
+        } catch (com.fasterxml.jackson.core.JsonProcessingException error) {
+            throw new IllegalArgumentException("Activity evidence must be valid JSON");
+        }
+        record.setEvidence(evidence);
         record.setScore(score);
         record.setPointsEarned(xpEarned);
         record.setDifficulty(level);
+        record.setCompletionTime(numberValue(payload.get("duration"), 0));
+        record.setAccuracy(accuracy);
+        record.setAttempts(numberValue(payload.get("attempts"), 1));
+        record.setHintsUsed(numberValue(payload.get("hintsUsed"), 0));
         record.setReplayCount(progress.getReplayCount());
         record.setCompletionStatus("COMPLETED");
+        record.setChoicesMade(payloadValue(payload.get("choicesMade")));
+        record.setWordsAttempted(numberValue(payload.get("wordsAttempted"), 0));
+        record.setWordsCorrect(numberValue(payload.get("wordsCorrect"), 0));
+        record.setStoryLength(numberValue(payload.get("storyLength"), 0));
         gameRecordRepository.save(record);
 
         profile.setPoints(profile.getPoints() + xpEarned);
@@ -214,8 +271,82 @@ public class ChildController {
         result.put("starsEarned", starsEarned);
         result.put("xpEarned", xpEarned);
         result.put("totalPoints", profile.getPoints());
+        result.put("recordId", record.getId());
 
         return ResponseEntity.ok(result);
+    }
+
+    private static final Set<String> GAME_IDS = Set.of(
+            "code_robot", "puzzle_lab", "spell_quest", "speaking_games", "story_builder",
+            "dream_designer", "eco_rescue", "mini_entrepreneur", "career_role_challenge",
+            "build_the_city", "science_lab", "data_detective", "design_an_app", "invent_something",
+            "team_leader", "money_manager", "interest_battle", "curiosity_trail", "photo_mission",
+            "fashion_studio", "directors_cut", "music_maker", "junior_chef", "interior_designer");
+
+    private String selectedDiscoveryDomains(Object choices) {
+        Map<String, String> names = Map.of(
+                "CREATIVITY_DESIGN", "Creativity & Design", "TECHNOLOGY_LOGIC", "Technology & Logic",
+                "SCIENCE_RESEARCH", "Science & Research", "COMMUNICATION_MEDIA", "Communication & Media",
+                "ENGINEERING_MAKING", "Engineering & Making", "SOCIAL_HELPING", "Social & Helping",
+                "BUSINESS_LEADERSHIP", "Business & Leadership", "NATURE_ENVIRONMENT", "Nature & Environment");
+        if (!(choices instanceof List<?> selections) || selections.isEmpty() || selections.size() > 32)
+            throw new IllegalArgumentException("Discovery needs recorded activity choices");
+        Set<String> selected = new LinkedHashSet<>();
+        for (Object choice : selections) {
+            Object code = choice instanceof Map<?, ?> map ? map.get("selected") : choice;
+            String domain = code instanceof String text ? names.get(text) : null;
+            if (domain == null) throw new IllegalArgumentException("Unknown selected discovery domain");
+            selected.add(domain);
+        }
+        return String.join(",", selected);
+    }
+
+    private void validateCompletion(Map<String, Object> payload) {
+        if (payload.containsKey("sessionId") && (!(payload.get("sessionId") instanceof String id)
+                || id.isBlank() || id.length() > 100)) {
+            throw new IllegalArgumentException("sessionId must be nonempty text up to 100 characters");
+        }
+        if (!(payload.get("gameId") instanceof String gameId) || !GAME_IDS.contains(normalizeGameId(gameId))) {
+            throw new IllegalArgumentException("Choose a valid game");
+        }
+        Object level = payload.getOrDefault("level", "EASY");
+        if (!(level instanceof String) || !Set.of("EASY", "MODERATE", "MEDIUM", "HARD")
+                .contains(((String) level).toUpperCase(Locale.ROOT))) {
+            throw new IllegalArgumentException("Choose a valid difficulty");
+        }
+        for (String field : List.of("score", "accuracy")) {
+            if (payload.get(field) == null) continue;
+            if (!(payload.get(field) instanceof Number number) || !Double.isFinite(number.doubleValue())
+                    || number.doubleValue() < 0 || number.doubleValue() > 100
+                    || ("score".equals(field) && number.doubleValue() != Math.rint(number.doubleValue()))) {
+                throw new IllegalArgumentException(field + " must be a number between 0 and 100");
+            }
+        }
+        for (String field : List.of("duration", "attempts", "hintsUsed", "wordsAttempted", "wordsCorrect", "storyLength")) {
+            if (!payload.containsKey(field)) continue;
+            if (!(payload.get(field) instanceof Number number) || !Double.isFinite(number.doubleValue())
+                    || number.doubleValue() < 0 || number.doubleValue() > Integer.MAX_VALUE
+                    || number.doubleValue() != Math.rint(number.doubleValue())) {
+                throw new IllegalArgumentException(field + " must be a nonnegative whole number");
+            }
+        }
+        for (String field : List.of("gameName", "gameCategory")) {
+            if (payload.containsKey(field) && !(payload.get(field) instanceof String)) {
+                throw new IllegalArgumentException(field + " must be text");
+            }
+        }
+    }
+
+    private int numberValue(Object value, int defaultValue) {
+        return value instanceof Number ? ((Number) value).intValue() : defaultValue;
+    }
+
+    private double decimalValue(Object value, double defaultValue) {
+        return value instanceof Number ? ((Number) value).doubleValue() : defaultValue;
+    }
+
+    private String payloadValue(Object value) {
+        return value == null ? "" : String.valueOf(value);
     }
 
     private String getNextLevel(String currentLevel) {
@@ -225,6 +356,36 @@ public class ChildController {
             case "MEDIUM": return "HARD";
             default: return null;
         }
+    }
+
+    @GetMapping("/achievements")
+    public ResponseEntity<?> getAchievements() {
+        User user = getAuthenticatedUser();
+        ChildProfile profile = childProfileRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
+
+        List<Map<String, Object>> achievements = new ArrayList<>();
+        List<String> badges = List.of("🏁", "🌟", "🤖", "🎨", "💡");
+        List<String> names = List.of("First Adventure", "Curious Explorer", "Robot Ranger", "Creative Spark", "Future Builder");
+        List<String> descriptions = List.of(
+                "You completed your first challenge.",
+                "You are exploring your interests with confidence.",
+                "You enjoy solving tech and logic tasks.",
+                "You love creativity and design choices.",
+                "You are building skills for a bright future."
+        );
+
+        for (int i = 0; i < names.size(); i++) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("id", i + 1L);
+            item.put("name", names.get(i));
+            item.put("description", descriptions.get(i));
+            item.put("badgeImage", badges.get(i));
+            item.put("earned", i < Math.max(1, Math.min(3, profile.getLevel())));
+            achievements.add(item);
+        }
+
+        return ResponseEntity.ok(achievements);
     }
 
     @GetMapping("/analysis")
@@ -237,8 +398,10 @@ public class ChildController {
 
         Map<String, Integer> categoryCounts = new HashMap<>();
         for (GameRecord g : games) {
-            String cat = g.getGameCategory() != null ? g.getGameCategory() : "Communication & Language";
-            categoryCounts.put(cat, categoryCounts.getOrDefault(cat, 0) + 1);
+            String domains = g.getCareerDomains() == null || g.getCareerDomains().isBlank() ? g.getGameCategory() : g.getCareerDomains();
+            if (domains == null) continue;
+            for (String cat : new LinkedHashSet<>(Arrays.asList(domains.split(","))))
+                if (!cat.isBlank()) categoryCounts.merge(cat.trim(), 1, Integer::sum);
         }
 
         List<String> topInterests = new ArrayList<>();
@@ -247,16 +410,12 @@ public class ChildController {
                 .limit(3)
                 .forEach(e -> topInterests.add(e.getKey()));
 
-        if (topInterests.isEmpty()) {
-            topInterests.add("Communication & Language");
-            topInterests.add("Technology & Logic");
-            topInterests.add("Creativity & Design");
-        }
-
         List<String> strengths = new ArrayList<>();
-        strengths.add("⭐ Vocabulary & Language Accuracy");
-        strengths.add("⭐ Logical Thinking");
-        strengths.add("⭐ Observation & Curiosity");
+
+        int meaningfulActivities = games.stream().mapToInt(game -> {
+            String choices = game.getChoicesMade();
+            return choices == null || choices.isBlank() ? 1 : Math.max(1, choices.split(",").length);
+        }).sum();
 
         Map<String, Object> result = new HashMap<>();
         result.put("title", "You're a Curious Explorer 🔍");
@@ -264,6 +423,8 @@ public class ChildController {
         result.put("strengths", strengths);
         result.put("encouragement", "Keep Exploring! 🚀");
         result.put("totalGamesPlayed", games.size());
+        result.put("totalMeaningfulActivities", meaningfulActivities);
+        result.put("enoughEvidence", games.size() >= 3 && meaningfulActivities >= 10);
         result.put("level", profile.getLevel());
         result.put("points", profile.getPoints());
 

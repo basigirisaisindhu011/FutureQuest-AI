@@ -1,6 +1,6 @@
 import sys
 import json
-import os
+import math
 import argparse
 
 DOMAINS = [
@@ -9,8 +9,17 @@ DOMAINS = [
 ]
 
 def load_data(filepath):
-    with open(filepath, 'r') as f:
-        return json.load(f)
+    with open(filepath, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    if not isinstance(data, dict):
+        raise ValueError("Input must be a JSON object")
+    if not isinstance(data.get("interests", ""), str):
+        raise ValueError("interests must be text")
+    for key in ("vocabulary_score", "logic_score", "listening_score", "science_score"):
+        value = data.get(key, 0)
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 100:
+            raise ValueError(f"{key} must be a number between 0 and 100")
+    return data
 
 def predict_fallback(data):
     interests = data.get("interests", "").lower()
@@ -38,11 +47,6 @@ def predict_fallback(data):
     if science_score >= 60 or "science" in interests or "space" in interests:
         predictions.append("Science & Exploration")
         
-    # Default fallbacks
-    for d in ["Communication & Language", "Technology & Logic", "Creativity & Design", "Science & Exploration"]:
-        if d not in predictions:
-            predictions.append(d)
-            
     return predictions[:3]
 
 def main():
@@ -53,8 +57,10 @@ def main():
     try:
         data = load_data(args.data)
         print(json.dumps(predict_fallback(data)))
-    except Exception:
-        print(json.dumps(["Communication & Language", "Technology & Logic", "Creativity & Design"]))
+    except (OSError, ValueError, TypeError) as error:
+        print(json.dumps({"error": str(error)}), file=sys.stderr)
+        return 1
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

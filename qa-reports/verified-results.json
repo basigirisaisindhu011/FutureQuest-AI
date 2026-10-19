@@ -1,0 +1,1443 @@
+{
+  "verified_at": "2026-10-19T21:27:32.448639+05:30",
+  "timezone": "Asia/Calcutta",
+  "backend_suites": [
+    {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suite": "com.careerquest.backend.ConsentAndFeedbackTests",
+      "artifact_sha256": "19fb99f187384cd51837228f2af116fea3581c0890f2fabe753371347c7de06e"
+    },
+    {
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suite": "com.careerquest.backend.KnownFailureRegressionTests",
+      "artifact_sha256": "606c29dcb92fa4f17e47654515f217e5994b07b939c85ad0631eb18883cb3dbd"
+    }
+  ],
+  "results": {
+    "browser": {
+      "passed": 138,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "Public site sections, world filtering, all 24 previews and keyboard dialog",
+          "status": "PASS"
+        },
+        {
+          "name": "Public desktop accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "Public responsive 320px and mobile navigation",
+          "status": "PASS"
+        },
+        {
+          "name": "Public responsive 375px and mobile navigation",
+          "status": "PASS"
+        },
+        {
+          "name": "Public responsive 430px and mobile navigation",
+          "status": "PASS"
+        },
+        {
+          "name": "Public responsive 768px and mobile navigation",
+          "status": "PASS"
+        },
+        {
+          "name": "Public responsive 1024px and mobile navigation",
+          "status": "PASS"
+        },
+        {
+          "name": "Public responsive 1440px and mobile navigation",
+          "status": "PASS"
+        },
+        {
+          "name": "Child four-step UI registration and real player code",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard tabs, map navigation and empty states",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "Hard-first core game playthrough, confirmed rewards, timeline and analysis",
+          "status": "PASS"
+        },
+        {
+          "name": "Child logout and PIN login through UI",
+          "status": "PASS"
+        },
+        {
+          "name": "Career library navigation, detail and return",
+          "status": "PASS"
+        },
+        {
+          "name": "Questy actual API response and honest network failure",
+          "status": "PASS"
+        },
+        {
+          "name": "Career discovery engine full Science Lab playthrough",
+          "status": "PASS"
+        },
+        {
+          "name": "Creative engine save, feedback and no duplicate completion",
+          "status": "PASS"
+        },
+        {
+          "name": "Interest engine full Curiosity Trail playthrough",
+          "status": "PASS"
+        },
+        {
+          "name": "Failed save stays honest: Dream Designer",
+          "status": "PASS"
+        },
+        {
+          "name": "Failed save stays honest: Science Lab",
+          "status": "PASS"
+        },
+        {
+          "name": "Failed save stays honest: Photo Mission",
+          "status": "PASS"
+        },
+        {
+          "name": "Failed save stays honest: Curiosity Trail",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard responsive 320px",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard responsive 375px",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard responsive 430px",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard responsive 768px",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard responsive 1024px",
+          "status": "PASS"
+        },
+        {
+          "name": "Child dashboard responsive 1440px",
+          "status": "PASS"
+        },
+        {
+          "name": "Game collection mobile accessibility and 24 actual engines",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: code_robot/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: code_robot/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: code_robot/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: code_robot/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: puzzle_lab/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: puzzle_lab/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: puzzle_lab/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: puzzle_lab/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: spell_quest/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: spell_quest/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: spell_quest/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: spell_quest/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: speaking_games/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: speaking_games/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: speaking_games/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: speaking_games/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: story_builder/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: story_builder/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: story_builder/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: story_builder/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: dream_designer/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: dream_designer/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: dream_designer/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: dream_designer/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: eco_rescue/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: eco_rescue/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: eco_rescue/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: eco_rescue/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: mini_entrepreneur/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: mini_entrepreneur/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: mini_entrepreneur/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: mini_entrepreneur/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: career_role_challenge/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: career_role_challenge/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: career_role_challenge/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: career_role_challenge/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: build_the_city/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: build_the_city/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: build_the_city/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: build_the_city/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: science_lab/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: science_lab/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: science_lab/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: science_lab/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: data_detective/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: data_detective/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: data_detective/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: data_detective/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: design_an_app/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: design_an_app/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: design_an_app/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: design_an_app/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: invent_something/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: invent_something/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: invent_something/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: invent_something/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: team_leader/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: team_leader/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: team_leader/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: team_leader/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: money_manager/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: money_manager/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: money_manager/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: money_manager/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interest_battle/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interest_battle/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interest_battle/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interest_battle/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: curiosity_trail/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: curiosity_trail/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: curiosity_trail/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: curiosity_trail/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: photo_mission/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: photo_mission/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: photo_mission/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: photo_mission/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: fashion_studio/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: fashion_studio/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: fashion_studio/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: fashion_studio/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: directors_cut/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: directors_cut/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: directors_cut/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: directors_cut/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: music_maker/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: music_maker/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: music_maker/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: music_maker/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: junior_chef/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: junior_chef/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: junior_chef/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: junior_chef/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interior_designer/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interior_designer/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interior_designer/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "Game entry mobile: interior_designer/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent UI registration, empty state and real child linking",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent evidence, real chart and desktop accessibility",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent responsive 320px",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent responsive 375px",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent responsive 430px",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent responsive 768px",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent responsive 1024px",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent responsive 1440px",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent forbidden-child API remains denied",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent dashboard API failure shows recoverable error",
+          "status": "PASS"
+        },
+        {
+          "name": "Mobile preview intent survives four-step registration",
+          "status": "PASS"
+        },
+        {
+          "name": "Reduced-motion preference disables mascot animation",
+          "status": "PASS"
+        },
+        {
+          "name": "No uncaught browser exceptions in executed paths",
+          "status": "PASS"
+        }
+      ],
+      "artifact_sha256": "b63944151057da70f0c175eb49b4a1c1c2fea01de75ee295fc10359b0cb1afc0"
+    },
+    "full_game_sessions": {
+      "passed": 144,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "code_robot/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "code_robot/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "code_robot/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "code_robot/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "code_robot/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "code_robot/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "puzzle_lab/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "puzzle_lab/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "puzzle_lab/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "puzzle_lab/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "puzzle_lab/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "puzzle_lab/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "spell_quest/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "spell_quest/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "spell_quest/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "spell_quest/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "spell_quest/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "spell_quest/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "speaking_games/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "speaking_games/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "speaking_games/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "speaking_games/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "speaking_games/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "speaking_games/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "story_builder/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "story_builder/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "story_builder/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "story_builder/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "story_builder/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "story_builder/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "dream_designer/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "dream_designer/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "dream_designer/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "dream_designer/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "dream_designer/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "dream_designer/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "eco_rescue/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "eco_rescue/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "eco_rescue/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "eco_rescue/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "eco_rescue/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "eco_rescue/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "mini_entrepreneur/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "mini_entrepreneur/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "mini_entrepreneur/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "mini_entrepreneur/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "mini_entrepreneur/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "mini_entrepreneur/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "career_role_challenge/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "career_role_challenge/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "career_role_challenge/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "career_role_challenge/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "career_role_challenge/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "career_role_challenge/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "build_the_city/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "build_the_city/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "build_the_city/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "build_the_city/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "build_the_city/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "build_the_city/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "science_lab/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "science_lab/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "science_lab/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "science_lab/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "science_lab/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "science_lab/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "data_detective/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "data_detective/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "data_detective/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "data_detective/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "data_detective/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "data_detective/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "design_an_app/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "design_an_app/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "design_an_app/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "design_an_app/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "design_an_app/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "design_an_app/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "invent_something/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "invent_something/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "invent_something/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "invent_something/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "invent_something/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "invent_something/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "team_leader/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "team_leader/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "team_leader/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "team_leader/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "team_leader/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "team_leader/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "money_manager/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "money_manager/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "money_manager/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "money_manager/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "money_manager/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "money_manager/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "interest_battle/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "interest_battle/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "interest_battle/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "interest_battle/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "interest_battle/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "interest_battle/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "curiosity_trail/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "curiosity_trail/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "curiosity_trail/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "curiosity_trail/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "curiosity_trail/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "curiosity_trail/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "photo_mission/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "photo_mission/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "photo_mission/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "photo_mission/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "photo_mission/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "photo_mission/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "fashion_studio/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "fashion_studio/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "fashion_studio/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "fashion_studio/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "fashion_studio/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "fashion_studio/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "directors_cut/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "directors_cut/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "directors_cut/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "directors_cut/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "directors_cut/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "directors_cut/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "music_maker/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "music_maker/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "music_maker/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "music_maker/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "music_maker/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "music_maker/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "junior_chef/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "junior_chef/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "junior_chef/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "junior_chef/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "junior_chef/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "junior_chef/Easy/replay-2",
+          "status": "PASS"
+        },
+        {
+          "name": "interior_designer/Easy",
+          "status": "PASS"
+        },
+        {
+          "name": "interior_designer/Moderate",
+          "status": "PASS"
+        },
+        {
+          "name": "interior_designer/Medium",
+          "status": "PASS"
+        },
+        {
+          "name": "interior_designer/Hard",
+          "status": "PASS"
+        },
+        {
+          "name": "interior_designer/Easy/replay-1",
+          "status": "PASS"
+        },
+        {
+          "name": "interior_designer/Easy/replay-2",
+          "status": "PASS"
+        }
+      ],
+      "artifact_sha256": "1c65683050b4156dac09faa3bdc163953ce625f3668157fffa1963de528dfd90"
+    },
+    "targeted_regressions": {
+      "passed": 13,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "Robot reset cancels an executing route",
+          "status": "PASS"
+        },
+        {
+          "name": "Spelling session aggregates earlier attempts and hints",
+          "status": "PASS"
+        },
+        {
+          "name": "Puzzle difficulty changes actual task complexity",
+          "status": "PASS"
+        },
+        {
+          "name": "Eco Rescue difficulty changes content",
+          "status": "PASS"
+        },
+        {
+          "name": "Dream Designer difficulty changes content",
+          "status": "PASS"
+        },
+        {
+          "name": "Business results depend on decisions",
+          "status": "PASS"
+        },
+        {
+          "name": "Science Hard controls match the experiment",
+          "status": "PASS"
+        },
+        {
+          "name": "City completion validates the neighborhood plan",
+          "status": "PASS"
+        },
+        {
+          "name": "Music Maker produces audible playback",
+          "status": "PASS"
+        },
+        {
+          "name": "Result button Choose another game opens the catalog",
+          "status": "PASS"
+        },
+        {
+          "name": "Science telemetry survives completion storage",
+          "status": "PASS"
+        },
+        {
+          "name": "Interest Battle credits selected domains rather than every offered domain",
+          "status": "PASS"
+        },
+        {
+          "name": "Puzzle age bands change task content",
+          "status": "PASS"
+        }
+      ],
+      "artifact_sha256": "335e37b15e4ee20f87c959cd3fb09dc2e3b399fe37f32edb3034af2da5fd543a"
+    },
+    "api_evidence": {
+      "passed": 30,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "creative: limited evidence confidence",
+          "status": "PASS"
+        },
+        {
+          "name": "creative: no fabricated strengths",
+          "status": "PASS"
+        },
+        {
+          "name": "creative: highest difficulty",
+          "status": "PASS"
+        },
+        {
+          "name": "technology: limited evidence confidence",
+          "status": "PASS"
+        },
+        {
+          "name": "technology: no fabricated strengths",
+          "status": "PASS"
+        },
+        {
+          "name": "technology: highest difficulty",
+          "status": "PASS"
+        },
+        {
+          "name": "Repeated equal task scores do not inflate skill",
+          "status": "PASS"
+        },
+        {
+          "name": "science: limited evidence confidence",
+          "status": "PASS"
+        },
+        {
+          "name": "science: no fabricated strengths",
+          "status": "PASS"
+        },
+        {
+          "name": "science: highest difficulty",
+          "status": "PASS"
+        },
+        {
+          "name": "business: limited evidence confidence",
+          "status": "PASS"
+        },
+        {
+          "name": "business: no fabricated strengths",
+          "status": "PASS"
+        },
+        {
+          "name": "business: highest difficulty",
+          "status": "PASS"
+        },
+        {
+          "name": "balanced: limited evidence confidence",
+          "status": "PASS"
+        },
+        {
+          "name": "balanced: no fabricated strengths",
+          "status": "PASS"
+        },
+        {
+          "name": "balanced: highest difficulty",
+          "status": "PASS"
+        },
+        {
+          "name": "limited: limited evidence confidence",
+          "status": "PASS"
+        },
+        {
+          "name": "limited: no fabricated strengths",
+          "status": "PASS"
+        },
+        {
+          "name": "No-history skill abstains",
+          "status": "PASS"
+        },
+        {
+          "name": "Unknown parent cannot read child",
+          "status": "PASS"
+        },
+        {
+          "name": "Code alone cannot grant unrelated parent access",
+          "status": "PASS"
+        },
+        {
+          "name": "Invalid PIN cannot link child",
+          "status": "PASS"
+        },
+        {
+          "name": "Public lookup does not disclose player codes",
+          "status": "PASS"
+        },
+        {
+          "name": "Feedback cannot reward nonexistent activity",
+          "status": "PASS"
+        },
+        {
+          "name": "Duplicate completion is idempotent",
+          "status": "PASS"
+        },
+        {
+          "name": "Concurrent duplicate completion is idempotent",
+          "status": "PASS"
+        },
+        {
+          "name": "Foreign game feedback is rejected",
+          "status": "PASS"
+        },
+        {
+          "name": "Repeated feedback rewards only once",
+          "status": "PASS"
+        },
+        {
+          "name": "Invalid child login PIN",
+          "status": "PASS"
+        },
+        {
+          "name": "Invalid child player code",
+          "status": "PASS"
+        }
+      ],
+      "artifact_sha256": "22a37076fb5fc2bae0c016725f35fe35e560a0d391bf8229ec245bc8377eb9b5"
+    },
+    "browser_boundaries": {
+      "passed": 13,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "Browser refresh retains child session",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong PIN and invalid code through UI",
+          "status": "PASS"
+        },
+        {
+          "name": "Slow API dashboard recovery",
+          "status": "PASS"
+        },
+        {
+          "name": "Expired token dashboard",
+          "status": "PASS"
+        },
+        {
+          "name": "Microphone unavailable fallback",
+          "status": "PASS"
+        },
+        {
+          "name": "Denied microphone recognition fallback",
+          "status": "PASS"
+        },
+        {
+          "name": "Game Exit returns to difficulty selection",
+          "status": "PASS"
+        },
+        {
+          "name": "Multiple browser tabs logout",
+          "status": "PASS"
+        },
+        {
+          "name": "Network unavailable dashboard",
+          "status": "PASS"
+        },
+        {
+          "name": "Invalid linking code through parent UI",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong child PIN through parent UI",
+          "status": "PASS"
+        },
+        {
+          "name": "Multiple child profiles link and switch in browser",
+          "status": "PASS"
+        },
+        {
+          "name": "Parent email login after logout",
+          "status": "PASS"
+        }
+      ],
+      "artifact_sha256": "e3d7d0ab62e3677b54276944380e2d9eea4e7f03dce4680c3a0399c75e5d8577"
+    },
+    "mobile_touch": {
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "Touch completion: Fashion Studio",
+          "status": "PASS"
+        },
+        {
+          "name": "Touch completion: Science Lab",
+          "status": "PASS"
+        },
+        {
+          "name": "Touch completion: Music Maker",
+          "status": "PASS"
+        },
+        {
+          "name": "Touch completion: Build the City",
+          "status": "PASS"
+        }
+      ],
+      "artifact_sha256": "6ab50eff7dcad5c838f922c871aa0b1472c699fb179ecdd5c2d138bc5d2a0f4a"
+    }
+  },
+  "other_checks": {
+    "maven": "BUILD SUCCESS",
+    "frontend_build": "PASS",
+    "frontend_lint": "PASS",
+    "content_property_tests": "2 PASS",
+    "python_validation": "3 PASS",
+    "database_restart": "PASS"
+  },
+  "scope": "Local development data only. No physical-device or production certification. Historical captures/logs remain local and ignored."
+}

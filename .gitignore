@@ -11,7 +11,6 @@ target/
 # Environment variables
 .env
 .env.*
-!.env.example
 
 # IDE & OS files
 .DS_Store
@@ -19,3 +18,22 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# Local development and disposable QA database files / test credentials
+backend/data/
+qa-reports/artifacts/*.mv.db
+qa-reports/artifacts/*.trace.db
+qa-reports/artifacts/*.local.json
+
+# Generated QA captures, logs and machine-local caches are not source changes.
+qa-reports/artifacts/
+qa-reports/screenshots/
+docs/redesign/screenshots/
+Microsoft/
+**/*.timestamp-*.mjs
+**/jwt.key
+__pycache__/
+*.py[cod]
+ai-analyzer/model.joblib
+docs/**/*.json
+docs/redesign/review.html

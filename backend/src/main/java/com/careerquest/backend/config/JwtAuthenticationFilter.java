@@ -50,7 +50,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         return;
                     }
 
-                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().toUpperCase());
+                    String normalizedRole = user.getRole() == null ? "" : user.getRole().trim().toUpperCase().replaceFirst("^ROLE_", "");
+                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + normalizedRole);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             user, null, Collections.singletonList(authority));
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

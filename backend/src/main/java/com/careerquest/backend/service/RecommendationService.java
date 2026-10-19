@@ -31,30 +31,39 @@ public class RecommendationService {
 
         List<GameRecord> games = gameRecordRepository.findByChildProfileId(childProfileId);
         
-        // 7 Core Categories Scoring
+        // Exploration domains are evidence pools, not direct career predictions.
         Map<String, Double> domainScores = new HashMap<>();
         String[] domains = {
-            "Communication & Language", "Technology & Logic", "Science & Exploration",
-            "Creativity & Design", "Nature & Environment", "Social & Helping", "Business & Leadership"
+            "Communication & Language", "Technology & Logic", "Engineering & Making",
+            "Science & Research", "Creativity & Design", "Communication & Media",
+            "Social & Helping", "Business & Leadership", "Nature & Environment"
         };
         for (String d : domains) domainScores.put(d, 0.0);
 
         for (GameRecord game : games) {
-            String cat = game.getGameCategory();
-            if (cat != null && domainScores.containsKey(cat)) {
-                domainScores.put(cat, domainScores.get(cat) + 5.0 + (game.getScore() / 10.0));
-            } else {
-                domainScores.put("Communication & Language", domainScores.get("Communication & Language") + 5.0);
+            String[] gameDomains = game.getCareerDomains() == null || game.getCareerDomains().isBlank() ? new String[0] : game.getCareerDomains().split(",");
+            if (gameDomains.length == 0 && game.getGameCategory() != null) {
+                gameDomains = new String[] { game.getGameCategory() };
+            }
+            for (String domain : gameDomains) {
+                String cleanDomain = domain.trim();
+                if (domainScores.containsKey(cleanDomain)) {
+                    domainScores.put(cleanDomain, domainScores.get(cleanDomain) + 1.0);
+                }
             }
         }
 
         List<String> top3 = domainScores.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+            .filter(entry -> entry.getValue() > 0)
+            .sorted(Comparator.comparing(Map.Entry<String, Double>::getValue, Comparator.reverseOrder())
+                .thenComparing(Map.Entry::getKey))
                 .limit(3)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        String explanation = "Based on activity choices, your child demonstrates high interest in " + String.join(", ", top3) + ".";
+        String explanation = top3.isEmpty()
+            ? "There is not enough activity yet to suggest exploration areas. Try a few activities first."
+            : "These are areas your child may enjoy exploring, based on recorded activity choices and replays: " + String.join(", ", top3) + ".";
 
         try {
             ObjectMapper mapper = new ObjectMapper();

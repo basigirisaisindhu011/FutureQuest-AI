@@ -78,7 +78,7 @@ export function Quizzes({ onBack }) {
       <div className="card animate-fade-in" style={{ padding: '24px', textAlign: 'center', maxWidth: '500px', margin: '40px auto' }}>
         <Award size={64} style={{ color: 'var(--color-accent)', margin: '0 auto 16px auto' }} />
         <h2>Quiz Completed!</h2>
-        <p style={{ color: 'var(--text-secondary)', margin: '8px 0 20px 0' }}>You successfully analyzed your interests and earned +50 XP bonus!</p>
+        <p style={{ color: 'var(--text-secondary)', margin: '8px 0 20px 0' }}>Your quiz responses were saved. Use them as a starting point for further exploration.</p>
         
         <div style={{ background: 'var(--bg-app)', padding: '16px', borderRadius: '12px', marginBottom: '24px', textAlign: 'left' }}>
           <h4 style={{ color: 'var(--color-primary)', fontSize: '18px', marginBottom: '8px' }}>Your Core Profile: {topTrait}</h4>

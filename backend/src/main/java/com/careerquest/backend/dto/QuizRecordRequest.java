@@ -1,6 +1,8 @@
 package com.careerquest.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 
 public class QuizRecordRequest {
@@ -9,6 +11,8 @@ public class QuizRecordRequest {
     private String quizType; // personality, skill, domain
 
     @NotNull
+    @Min(0)
+    @Max(10)
     private Integer score;
 
     @NotBlank

@@ -12,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import jakarta.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/ai")
@@ -32,7 +34,7 @@ public class ChatController {
     }
 
     @PostMapping("/chat")
-    public ResponseEntity<?> askChatbot(@RequestBody ChatRequest request) {
+    public ResponseEntity<?> askChatbot(@Valid @RequestBody ChatRequest request) {
         User user = getAuthenticatedUser();
         String message = request.getMessage().toLowerCase();
         
@@ -51,13 +53,13 @@ public class ChatController {
                 
                 List<GameRecord> games = gameRecordRepository.findByChildProfileId(profile.getId());
                 for (GameRecord g : games) {
-                    if ("business".equalsIgnoreCase(g.getGameType())) {
+                    if (g.getScore() != null && "business".equalsIgnoreCase(g.getGameType())) {
                         businessScore = Math.max(businessScore, g.getScore());
                     }
-                    if ("photography".equalsIgnoreCase(g.getGameType())) {
+                    if (g.getScore() != null && "photography".equalsIgnoreCase(g.getGameType())) {
                         photoScore = Math.max(photoScore, g.getScore());
                     }
-                    if ("coding".equalsIgnoreCase(g.getGameType())) {
+                    if (g.getScore() != null && "coding".equalsIgnoreCase(g.getGameType())) {
                         codingScore = Math.max(codingScore, g.getScore());
                     }
                 }

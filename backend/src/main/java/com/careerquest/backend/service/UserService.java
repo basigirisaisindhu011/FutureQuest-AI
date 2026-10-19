@@ -41,6 +41,13 @@ public class UserService {
         this.notificationService = notificationService;
     }
 
+    private String normalizeRole(String role) {
+        if (role == null || role.isBlank()) {
+            return "PARENT";
+        }
+        return role.trim().toUpperCase().replaceFirst("^ROLE_", "");
+    }
+
     public User registerUser(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
@@ -50,9 +57,12 @@ public class UserService {
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
-        String role = request.getRole() != null ? request.getRole().toUpperCase() : "PARENT";
+        String role = normalizeRole(request.getRole());
+        if (!"PARENT".equals(role)) {
+            throw new IllegalArgumentException("Public registration is available for parent accounts only");
+        }
 
-        // Parents and Admins are always ACTIVE immediately. Children register via simple child flow.
+        // Public signup creates parents only. Children use the separate player registration flow.
         User user = new User(request.getUsername(), encodedPassword, request.getEmail(), role, "ACTIVE");
         return userRepository.save(user);
     }
@@ -105,6 +115,16 @@ public class UserService {
         );
 
         return savedLink;
+    }
+
+    public ParentChildLink linkChildToParent(Long parentId, String playerCode, String pin) {
+        ChildProfile profile = childProfileRepository.findByPlayerCode(playerCode == null ? "" : playerCode.trim().toUpperCase())
+                .orElseThrow(() -> new IllegalArgumentException("Check the Player Code and child PIN"));
+        if (pin == null || !pin.matches("\\d{4}") || profile.getPinHash() == null
+                || !passwordEncoder.matches(pin, profile.getPinHash())) {
+            throw new IllegalArgumentException("Check the Player Code and child PIN");
+        }
+        return linkChildToParent(parentId, playerCode);
     }
 
     public ChildProfile createChildProfile(Long parentId, ChildProfileRequest request) {

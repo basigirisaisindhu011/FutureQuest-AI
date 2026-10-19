@@ -57,7 +57,7 @@ public class AuthController {
                     token,
                     user.getUsername(),
                     user.getEmail(),
-                    user.getRole(),
+                    user.getRole().replaceFirst("^ROLE_", ""),
                     user.getAccountStatus()
             ));
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class AuthController {
                 token,
                 user.getUsername(),
                 user.getEmail(),
-                user.getRole(),
+                user.getRole().replaceFirst("^ROLE_", ""),
                 user.getAccountStatus()
         ));
     }
@@ -99,7 +99,7 @@ public class AuthController {
             response.put("nickname", profile.getNickname());
             response.put("avatar", profile.getAvatar());
             response.put("ageGroup", profile.getAgeGroup());
-            response.put("role", "ROLE_CHILD");
+            response.put("role", "CHILD");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             LOGGER.error("Child registration failed", e);
@@ -112,11 +112,8 @@ public class AuthController {
         return ResponseEntity.ok(childProfileRepository.findTop20ByNicknameContainingIgnoreCase(name).stream()
                 .map(profile -> {
                     Map<String, Object> player = new HashMap<>();
-                    player.put("profileId", profile.getId());
                     player.put("nickname", profile.getNickname());
                     player.put("avatar", profile.getAvatar());
-                    player.put("ageGroup", profile.getAgeGroup());
-                    player.put("playerCode", profile.getPlayerCode());
                     player.put("level", profile.getLevel());
                     return player;
                 }).toList());
@@ -149,7 +146,7 @@ public class AuthController {
         response.put("nickname", profile.getNickname());
         response.put("avatar", profile.getAvatar());
         response.put("ageGroup", profile.getAgeGroup());
-        response.put("role", "ROLE_CHILD");
+        response.put("role", "CHILD");
         return ResponseEntity.ok(response);
     }
 }
